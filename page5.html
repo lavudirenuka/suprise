@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Beautiful Memories</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:linear-gradient(#ff9a9e,#fad0c4);
+text-align:center;
+overflow:hidden;
+}
+
+h1{
+color:white;
+margin-top:30px;
+font-size:40px;
+}
+
+/* slideshow */
+
+.slideshow{
+margin-top:40px;
+}
+
+.slideshow img{
+width:320px;
+height:400px;
+border-radius:20px;
+box-shadow:0 0 25px rgba(255,255,255,0.8);
+animation:fade 3s;
+}
+
+@keyframes fade{
+from{opacity:0.3;transform:scale(0.95);}
+to{opacity:1;transform:scale(1);}
+}
+
+/* message */
+
+.message{
+margin-top:25px;
+font-size:22px;
+color:white;
+min-height:40px;
+padding:10px;
+}
+
+/* floating hearts */
+
+.heart{
+position:fixed;
+color:white;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);opacity:0;}
+50%{opacity:1;}
+100%{transform:translateY(-10vh);opacity:0;}
+}
+
+</style>
+</head>
+
+<body>
+
+<h1>💖 Advance happiest birthday fav 💖</h1>
+
+<div class="slideshow">
+<img id="photo" src="l1p1.jpeg">
+</div>
+
+<div id="message" class="message"></div>
+
+<!-- music -->
+
+<audio id="music" autoplay muted onended="songFinished()">
+<source src="song5.mp4" type="audio/mpeg">
+</audio>
+
+<script>
+
+/* start music */
+
+window.onload=function(){
+let music=document.getElementById("music");
+music.muted=false;
+music.play();
+}
+
+/* slideshow */
+
+let photos=[
+"l4p4.jpeg",
+"photo2.jpeg",
+"l4p3.jpeg",
+"l2p1.jpeg",
+"l1p2.jpeg",
+"l1p3.jpeg"
+];
+
+let index=0;
+
+let slideShow=setInterval(function(){
+
+index++;
+
+if(index>=photos.length){
+index=0;
+}
+
+document.getElementById("photo").src=photos[index];
+
+},3000);
+
+/* typing message */
+
+let text="“Happy Birthday! Thank you for always being there for me, for listening to me, and for staying with me even when I’m difficult. Our friendship means a lot to me.” 💖";
+let i=0;
+
+function typeEffect(){
+
+if(i<text.length){
+
+document.getElementById("message").innerHTML+=text.charAt(i);
+i++;
+
+setTimeout(typeEffect,60);
+
+}
+
+}
+
+typeEffect();
+
+/* floating hearts */
+
+let heartInterval=setInterval(function(){
+
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*20)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+
+},600);
+
+/* when song ends */
+
+function songFinished(){
+
+clearInterval(slideShow);
+clearInterval(heartInterval);
+
+document.getElementById("message").innerHTML=
+"💖 Thank you for watching these beautiful memories 💖";
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<title>Special Letters</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial;
+background:#ffe6eb;
+text-align:center;
+overflow:hidden;
+}
+
+h1{
+color:#ff3366;
+margin-top:30px;
+}
+
+/* floating hearts */
+
+.heart{
+position:fixed;
+color:#ff4b6e;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);opacity:0;}
+50%{opacity:1;}
+100%{transform:translateY(-10vh);opacity:0;}
+}
+
+/* letters container */
+
+.container{
+display:flex;
+justify-content:center;
+gap:40px;
+margin-top:60px;
+flex-wrap:wrap;
+}
+
+/* envelope */
+
+.letter{
+width:120px;
+height:90px;
+background:#ff4b6e;
+position:relative;
+cursor:pointer;
+border-radius:5px;
+transition:transform .4s;
+}
+
+.letter:hover{
+transform:scale(1.1);
+}
+
+.letter:before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:0;
+height:0;
+border-left:60px solid transparent;
+border-right:60px solid transparent;
+border-bottom:45px solid #ff7992;
+}
+
+/* letter content */
+
+.content{
+display:none;
+margin-top:40px;
+}
+
+.content img{
+width:260px;
+border-radius:15px;
+box-shadow:0 0 20px pink;
+}
+
+.message{
+font-size:20px;
+color:#ff3366;
+margin:20px;
+min-height:30px;
+}
+
+/* final button */
+
+.nextPageBtn{
+margin-top:40px;
+padding:14px 35px;
+font-size:18px;
+background:#ff3366;
+color:white;
+border:none;
+border-radius:10px;
+cursor:pointer;
+display:none;
+}
+
+.nextPageBtn:hover{
+background:#ff1a53;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>💌 Special Letters For You 💌</h1>
+
+<!-- first envelope -->
+
+<div id="startLetter" class="container">
+<div class="letter" onclick="showAllLetters()"></div>
+</div>
+
+<!-- 4 letters -->
+
+<div id="letters" class="container" style="display:none">
+
+<div class="letter" onclick="openLetter(1)"></div>
+<div class="letter" onclick="openLetter(2)"></div>
+<div class="letter" onclick="openLetter(3)"></div>
+<div class="letter" onclick="openLetter(4)"></div>
+
+</div>
+
+<!-- LETTER 1 -->
+
+<div id="content1" class="content">
+<img src="photo 1.jpeg">
+<div id="msg1" class="message"></div>
+
+<audio id="song1" onended="letterFinished(1)">
+<source src="song2.mp4" type="audio/mpeg">
+</audio>
+</div>
+
+<!-- LETTER 2 -->
+
+<div id="content2" class="content">
+<img src="l3p3.jpeg">
+<div id="msg2" class="message"></div>
+
+<audio id="song2" onended="letterFinished(2)">
+<source src="song3.mp4" type="audio/mpeg">
+</audio>
+</div>
+
+<!-- LETTER 3 -->
+
+<div id="content3" class="content">
+<img src="l2p1.jpeg">
+<div id="msg3" class="message"></div>
+
+<audio id="song3" onended="letterFinished(3)">
+<source src="song4.mp4" type="audio/mpeg">
+</audio>
+</div>
+
+<!-- LETTER 4 -->
+
+<div id="content4" class="content">
+<img src="l4p2.jpeg">
+<div id="msg4" class="message"></div>
+
+<audio id="song4" onended="letterFinished(4)">
+<source src="song6.mp4" type="audio/mpeg">
+</audio>
+</div>
+
+<!-- final button -->
+
+<button id="nextPageBtn" class="nextPageBtn" onclick="goNextPage()">
+🎁 Final Surprise ➜
+</button>
+
+<script>
+
+/* floating hearts */
+
+setInterval(function(){
+
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(20+Math.random()*20)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),6000);
+
+},600);
+
+/* show letters */
+
+function showAllLetters(){
+document.getElementById("startLetter").style.display="none";
+document.getElementById("letters").style.display="flex";
+}
+
+/* typing text */
+
+let texts={
+1:"“I really admire your loving nature. The way you care for me and understand me makes me feel very happy. Maybe that’s why you became so special to my heart.” ❤️ ❤️",
+2:"“Your innocent smile, your loving heart, your attitude, and your romantic nature make you different from everyone else.” 💫",
+3:" “You may not realize it, but your innocence and caring nature make people like you very easily… including me.”😊",
+4:"“Your innocent face and your attitude are dangerous… because they made me like you more than I planned.” 😌❤️💖"
+};
+
+function typeText(element,text){
+
+element.innerHTML="";
+let i=0;
+
+let typing=setInterval(function(){
+
+element.innerHTML+=text.charAt(i);
+i++;
+
+if(i>=text.length){
+clearInterval(typing);
+}
+
+},50);
+
+}
+
+/* track opened letters */
+
+let openedLetters=[];
+
+/* open letter */
+
+function openLetter(num){
+
+document.getElementById("letters").style.display="none";
+
+let contents=document.querySelectorAll(".content");
+contents.forEach(c=>c.style.display="none");
+
+document.getElementById("content"+num).style.display="block";
+
+typeText(document.getElementById("msg"+num),texts[num]);
+
+/* stop other songs */
+
+let songs=document.querySelectorAll("audio");
+songs.forEach(song=>{
+song.pause();
+song.currentTime=0;
+});
+
+/* play song */
+
+document.getElementById("song"+num).play();
+
+}
+
+/* when song finishes */
+
+function letterFinished(num){
+
+document.getElementById("content"+num).style.display="none";
+document.getElementById("letters").style.display="flex";
+
+if(!openedLetters.includes(num)){
+openedLetters.push(num);
+}
+
+if(openedLetters.length==4){
+document.getElementById("nextPageBtn").style.display="inline-block";
+}
+
+}
+
+/* go next page */
+
+function goNextPage(){
+window.location.href="page5.html";
+}
+
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+background:#ffe6eb;
+font-family:Arial;
+overflow:hidden;
+}
+
+/* left side */
+.left{
+width:50%;
+position:relative;
+}
+
+/* glowing text inside heart */
+.heartText{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:60px;
+font-weight:bold;
+color:#ff3366;
+opacity:0;
+animation:glow 1.5s infinite alternate;
+}
+
+/* glow animation */
+@keyframes glow{
+0%{
+text-shadow:
+0 0 10px #ff3366,
+0 0 20px #ff3366,
+0 0 30px #ff6699;
+}
+100%{
+text-shadow:
+0 0 20px #ff3366,
+0 0 40px #ff3366,
+0 0 60px #ff99bb;
+}
+}
+
+/* right side */
+.right{
+width:50%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+h1{
+font-size:20px;
+color:#ff3366;
+}
+
+button{
+margin-top:25px;
+padding:12px 30px;
+font-size:18px;
+border:none;
+border-radius:25px;
+background:#ff4b6e;
+color:white;
+cursor:pointer;
+}
+
+/* particles */
+.particle{
+position:absolute;
+width:10px;
+height:10px;
+background:#ff3366;
+border-radius:50%;
+box-shadow:0 0 12px #ff3366;
+transition:all 2s ease;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="left" id="heart">
+
+<!-- Text inside heart -->
+<div class="heartText" id="favText">FAV ❤️</div>
+
+</div>
+
+<div class="right">
+
+<h1>
+DEAR FAV 🫀🫂 <br>
+“Advance Happy Birthday 🎂 to someone who means a lot to me.
+Thank you for being such a wonderful friend and bringing so many smiles into my life.
+Your kindness, support, and the little moments we share truly make life brighter.
+I feel really lucky to know someone as special as you.
+Wishing you a birthday filled with happiness, laughter, and a year full of success and beautiful moments.” ❤️
+</h1>
+
+<button onclick="location.href='page3.html'">
+Next Surprise
+</button>
+
+</div>
+
+<script>
+
+let container=document.getElementById("heart");
+let particles=[];
+let heartPoints=[];
+
+/* heart shape math */
+for(let t=0;t<Math.PI*2;t+=0.08){
+
+let x=16*Math.pow(Math.sin(t),3);
+let y=13*Math.cos(t)-5*Math.cos(2*t)-2*Math.cos(3*t)-Math.cos(4*t);
+
+heartPoints.push({
+x:300+x*15,
+y:280-y*15
+});
+}
+
+/* create random particles */
+for(let i=0;i<heartPoints.length;i++){
+
+let p=document.createElement("div");
+p.className="particle";
+
+p.style.left=Math.random()*600+"px";
+p.style.top=Math.random()*600+"px";
+
+container.appendChild(p);
+particles.push(p);
+}
+
+/* form heart */
+setTimeout(()=>{
+
+particles.forEach((p,i)=>{
+p.style.left=heartPoints[i].x+"px";
+p.style.top=heartPoints[i].y+"px";
+});
+
+/* show glowing FAV text */
+setTimeout(()=>{
+document.getElementById("favText").style.opacity="1";
+},2000);
+
+},2000);
+
+</script>
+
+</body>
+</html>

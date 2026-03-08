@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Final Surprise</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+flex-direction:column;
+background:#fff0f5;
+font-family:Arial;
+}
+
+.container{
+flex:1;
+display:flex;
+}
+
+/* left side */
+.left{
+width:50%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+}
+
+.imageTitle{
+font-size:28px;
+color:#ff1493;
+margin-bottom:15px;
+font-weight:bold;
+text-shadow:2px 2px 10px pink;
+}
+
+.left img{
+width:300px;
+border-radius:20px;
+box-shadow:0 0 20px pink;
+}
+
+/* right side lyrics */
+.right{
+width:50%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+/* lyric style */
+.lyric{
+font-size:18px;
+color:#ff3366;
+margin:8px;
+opacity:0;
+transition:opacity 1s;
+}
+
+.show{
+opacity:1;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="left">
+<div class="imageTitle">❤️ Fav 🫂 Thingari Pilla ❤️</div>
+<img src="friend.jpeg">
+</div>
+
+<div class="right" id="lyrics"></div>
+
+</div>
+
+<audio id="song">
+<source src="song1.mp4" type="audio/mpeg">
+</audio>
+
+<script>
+
+let lyrics=[
+{time:1,text:"TAARA NA DISSE ❤️"},
+{time:4,text:"YA CHANN KHO JAAVE ✨"},
+{time:7,text:"TENU SANG RAKHNA 💫"},
+{time:10,text:"KUJH NA HOVE 💫"},
+{time:13,text:"YA SAB HO JAAVE 💫"},
+{time:16,text:"TENU SANG RAKHNA 💫"},
+{time:19,text:"WADDI TOH WADDI 💫"},
+{time:22,text:"KOYI VI FAUJ AAVE 💫"},
+{time:25,text:"TAINU SANG RAKHNA 💫"},
+{time:28,text:"TAAR NA DISSE 💫"},
+{time:31,text:"YA CHANN KHO JAAVE 💫"},
+{time:34,text:"TAINU SANG RAKHNA 💫"},
+{time:37,text:"RAASTA YEH JAANE LE CHALA"},
+{time:40,text:"HAI KAHAN ?"},
+{time:43,text:"RAASTA NA MAANE TU JAHAN"},
+{time:46,text:"MAIN WAHAN !"},
+{time:49,text:"RAASTA YEH JAANE LE CHALA"},
+{time:52,text:"HAI KAHAN ?"},
+{time:55,text:"RAASTA NA MAANE TU JAHAN"},
+{time:58,text:"MAIN WAHAN !"},
+{time:61,text:"SAAH RUKK JAAVE"},
+{time:64,text:"YA JAG MUKK JAAVE"},
+{time:67,text:"TAINU SANG RAKHNA 💫"}
+];
+
+let audio=document.getElementById("song");
+let container=document.getElementById("lyrics");
+
+window.onload=function(){
+audio.play();
+}
+
+audio.ontimeupdate=function(){
+
+let current=audio.currentTime;
+
+lyrics.forEach(function(line,i){
+
+if(current>=line.time && !line.shown){
+
+let div=document.createElement("div");
+div.className="lyric show";
+div.innerText=line.text;
+
+container.appendChild(div);
+
+line.shown=true;
+
+}
+
+});
+
+};
+audio.onended=function(){
+    window.location.href="page4.html";
+}
+</script>
+
+</body>
+</html>
